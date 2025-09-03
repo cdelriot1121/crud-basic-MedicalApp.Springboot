@@ -4,7 +4,7 @@
 This project is a simple CRUD (Create, Read, Update, Delete) system for managing medical appointments. It allows users to create, view, update, and delete appointments through a user-friendly interface.
 
 ## Repo Owner
-@Mariac045
+[Mariac045](https://github.com/Mariac045)
 
 ## Features
 - Create new medical appointments
