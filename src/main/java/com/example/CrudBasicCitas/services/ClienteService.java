@@ -5,6 +5,7 @@ import com.example.CrudBasicCitas.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClienteService {
@@ -17,6 +18,14 @@ public class ClienteService {
 
     public List<Cliente> obtenerTodosLosClientes() {
         return clienteRepository.findAll();
+    }
+
+    public Optional<Cliente> autenticarCliente(String email, String password){
+        Optional<Cliente> cliente = clienteRepository.findByEmail(email);
+        if (cliente.isPresent() && cliente.get().getPassword().equals(password)){
+            return cliente;
+        }
+        return Optional.empty();
     }
 
     public Cliente obtenerClientePorId(Long id) {
