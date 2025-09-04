@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -22,19 +23,19 @@ public class ClienteController {
     private CitasService citasService;
 
     @GetMapping("/login")
-    public String mostrarLogin(){
+    public String mostrarLogin() {
         return "login";
     }
 
     @GetMapping("/register")
-    public String mostrarRegistro(){
+    public String mostrarRegistro() {
         return "register";
     }
 
     @PostMapping("/loginProcess")
-    public String loginProcess(@RequestParam String email, @RequestParam String password, HttpSession session){
+    public String loginProcess(@RequestParam String email, @RequestParam String password, HttpSession session) {
         Optional<Cliente> cliente = clienteService.autenticarCliente(email, password);
-        if (cliente.isPresent()){
+        if (cliente.isPresent()) {
             session.setAttribute("clienteId", cliente.get().getId());
             return "Inicio";
         }
@@ -50,10 +51,40 @@ public class ClienteController {
                                   @RequestParam String fecha_nacimiento,
                                   @RequestParam String genero,
                                   @RequestParam String celular,
-                                  @RequestParam String direccion){
+                                  @RequestParam String direccion, RedirectAttributes redirectAttributes) {
 
-        // terminare la logica
-        return null;
+        try {
+            //verificar si el usuario existe mediante autenticacion
+            if (clienteService.existeClientePorEmail(email)) {
+                return "redirect:/register?error=emailExists";
+            }
+
+            Cliente nuevoCliente = new Cliente();
+            nuevoCliente.setNombre(nombre);
+            nuevoCliente.setEmail(email);
+            nuevoCliente.setPassword(password);
+            nuevoCliente.setIdentificacion(identificacion);
+            nuevoCliente.setFecha_nacimiento(fecha_nacimiento);
+            nuevoCliente.setGenero(genero);
+            nuevoCliente.setCelular(celular);
+            nuevoCliente.setDireccion(direccion);
+            nuevoCliente.setEstado(Cliente.Estado.ACTIVO);
+
+            Cliente clienteGuardado = clienteService.registrarCliente(nuevoCliente);
+
+            return "redirect:/login";
+
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error en el registro:" + e.getMessage());
+            return "redirect:/register";
+
+        }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/";
     }
 
 }
