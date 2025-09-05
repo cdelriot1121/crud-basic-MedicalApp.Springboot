@@ -12,4 +12,7 @@ public class MappingPagesPublic {
     }
 
 
+    @GetMapping("/about")
+    public String acercade() {return "about"; }
+
 }
