@@ -7,6 +7,7 @@ import com.example.CrudBasicCitas.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,9 @@ public class CitasService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    public List<Citas> obtenerTodasLasCitas(){
+        return citasRepository.findAll();
+    }
 
     public Citas registrarCitas(Citas cita){
         return citasRepository.save(cita);
@@ -37,8 +41,25 @@ public class CitasService {
         return citasRepository.findById(id);
     }
 
+    public Citas actualizarCita(Long id, Citas citaActualizada){
+        return citasRepository.findById(id).map(cita -> {
+            cita.setCliente(citaActualizada.getCliente());
+            cita.setAsunto(citaActualizada.getAsunto());
+            cita.setDescripcion(citaActualizada.getDescripcion());
+            cita.setTipoCita(citaActualizada.getTipoCita());
+            cita.setFecha_cita(citaActualizada.getFecha_cita());
+            cita.setDoctor(citaActualizada.getDoctor());
+            return citasRepository.save(cita);
+        }).orElseThrow(() -> new RuntimeException("esta ID de cita no fue encontrada: " + id));
 
+    }
 
-
+    public List<Citas> obtenerCitasPorClienteId(Long ClienteId){
+        Optional<Cliente> cliente = clienteRepository.findById(ClienteId);
+        if(cliente.isPresent()){
+            return citasRepository.findByCliente(cliente.get());
+        }
+        return new ArrayList<>();
+    }
 
 }
