@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,21 +26,48 @@ public class ClienteController {
     private CitasService citasService;
 
     @GetMapping("/login")
-    public String mostrarLogin() {
+    public String mostrarLogin(HttpSession session) {
+        
+        if (session.getAttribute("clienteId") != null) {
+            return "redirect:/inicioUser";
+        }
         return "login";
     }
 
     @GetMapping("/register")
-    public String mostrarRegistro() {
+    public String mostrarRegistro(HttpSession session) {
+        
+        if (session.getAttribute("clienteId") != null) {
+            return "redirect:/inicioUser";
+        }
         return "register";
+    }
+    
+    @GetMapping("/inicioUser")
+    public String mostrarInicioUser(HttpSession session, Model model) {
+        // Verificar si hay sesión activa
+        Long clienteId = (Long) session.getAttribute("clienteId");
+        if (clienteId == null) {
+            return "redirect:/login";
+        }
+        
+        
+        Cliente cliente = clienteService.obtenerClientePorId(clienteId);
+        model.addAttribute("cliente", cliente);
+        
+        return "inicioUser";
     }
 
     @PostMapping("/loginProcess")
     public String loginProcess(@RequestParam String email, @RequestParam String password, HttpSession session) {
         Optional<Cliente> cliente = clienteService.autenticarCliente(email, password);
         if (cliente.isPresent()) {
+            
             session.setAttribute("clienteId", cliente.get().getId());
-            return "inicioUser";
+            session.setAttribute("clienteNombre", cliente.get().getNombre());
+            session.setAttribute("clienteEmail", cliente.get().getEmail());
+            
+            return "redirect:/inicioUser";
         }
 
         return "redirect:/login?error=true";
@@ -56,7 +84,7 @@ public class ClienteController {
                                   @RequestParam String direccion, RedirectAttributes redirectAttributes) {
 
         try {
-            //verificar si el usuario existe mediante autenticacion
+            // verificar si el usuario ya pues existe, mediante autenticacion
             if (clienteService.existeClientePorEmail(email)) {
                 return "redirect:/register?error=emailExists";
             }
@@ -72,7 +100,7 @@ public class ClienteController {
             nuevoCliente.setDireccion(direccion);
             nuevoCliente.setEstado(Cliente.Estado.ACTIVO);
 
-            Cliente clienteGuardado = clienteService.registrarCliente(nuevoCliente);
+            clienteService.registrarCliente(nuevoCliente);
 
             return "redirect:/login";
 

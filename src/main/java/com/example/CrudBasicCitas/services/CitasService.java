@@ -1,15 +1,16 @@
 package com.example.CrudBasicCitas.services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.CrudBasicCitas.entities.Citas;
 import com.example.CrudBasicCitas.entities.Cliente;
 import com.example.CrudBasicCitas.repository.CitasRepository;
 import com.example.CrudBasicCitas.repository.ClienteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -54,8 +55,8 @@ public class CitasService {
 
     }
 
-    public List<Citas> obtenerCitasPorClienteId(Long ClienteId){
-        Optional<Cliente> cliente = clienteRepository.findById(ClienteId);
+    public List<Citas> obtenerCitasPorClienteId(Long clienteId){
+        Optional<Cliente> cliente = clienteRepository.findById(clienteId);
         if(cliente.isPresent()){
             return citasRepository.findByCliente(cliente.get());
         }

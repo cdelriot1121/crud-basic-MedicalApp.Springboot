@@ -20,7 +20,6 @@
                 <a th:href="@{/Inicio}">Inicio</a>
                 <a th:href="@{/citas/misCitas}" class="active">Mis Citas</a>
                 <a th:href="@{/citas/nuevaCita}">Nueva Cita</a>
-                <a th:href="@{/about}">Nosotros</a>
             </nav>
             <div class="user-actions">
                 <a th:href="@{/logout}" class="btn btn-logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
@@ -65,7 +64,7 @@
         </div>
 
         <!-- Lista de citas -->
-        <div class="citas-grid" th:if="${not #lists.isEmpty(citas)}">
+        <div class="citas-grid" th:if="${citas != null && !citas.isEmpty()}">
             <div class="cita-card" th:each="cita : ${citas}">
                 <div class="cita-header">
                     <div class="cita-badge" th:classappend="${cita.tipoCita == 'Consulta General' ? 'badge-primary' : 

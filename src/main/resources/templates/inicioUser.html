@@ -20,7 +20,6 @@
                 <a th:href="@{/Inicio}" class="active">Inicio</a>
                 <a th:href="@{/citas/misCitas}">Mis Citas</a>
                 <a th:href="@{/citas/nuevaCita}">Nueva Cita</a>
-                <a th:href="@{/about}">Nosotros</a>
             </nav>
             <div class="user-actions">
                 <a th:href="@{/logout}" class="btn btn-logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
@@ -34,6 +33,7 @@
             <div class="welcome-content">
                 <h1>Bienvenido a MediCare</h1>
                 <p th:if="${cliente != null}" th:text="'¡Hola, ' + ${cliente.nombre} + '!'"></p>
+                <p th:if="${cliente == null && session.clienteNombre != null}" th:text="'¡Hola, ' + ${session.clienteNombre} + '!'"></p>
                 <p>Tu portal personal de salud y bienestar</p>
                 <div class="welcome-actions">
                     <a th:href="@{/citas/nuevaCita}" class="btn btn-primary btn-lg">
@@ -110,7 +110,20 @@
                 </div>
                 
                 <div class="appointment-list" id="appointmentsList" style="display: none;">
-                    <!-- El contenido se carga dinámicamente con JavaScript o Thymeleaf -->
+                    <!-- Citas reales del usuario -->
+                    <div th:each="cita : ${cliente != null ? cliente.citas : {}}" class="appointment-item">
+                        <div class="appointment-date">
+                            <div class="date-badge">
+                                <span class="date-day" th:text="${#strings.substring(cita.fecha_cita, 0, 2)}">15</span>
+                                <span class="date-month" th:text="${#strings.substring(cita.fecha_cita, 3, 6)}">Sep</span>
+                            </div>
+                            <span class="appointment-time" th:text="${#strings.substring(cita.fecha_cita, 7)}">10:30 AM</span>
+                        </div>
+                        <div class="appointment-details">
+                            <h4 th:text="${cita.tipoCita}">Tipo Cita</h4>
+                            <p><i class="fas fa-user-md"></i> <span th:text="${cita.doctor}">Doctor</span> - <span th:text="${cita.asunto}">Asunto</span></p>
+                        </div>
+                    </div>
                 </div>
             </section>
             
@@ -229,63 +242,27 @@
         </div>
     </footer>
 
-    <!-- Script para cargar próximas citas (simulación para demo) -->
-    <script>
-        // Simulación de datos para mostrar próximas citas
-        // En un entorno real, estos datos vendrían del backend a través de Thymeleaf
+    <!-- Contenido de citas dinámico con Thymeleaf -->
+    <script th:inline="javascript">
         document.addEventListener('DOMContentLoaded', function() {
-            // Comenta esta línea para mostrar el mensaje "No tienes citas"
-            loadSampleAppointments();
-        });
-        
-        function loadSampleAppointments() {
             const noAppointments = document.getElementById('noAppointments');
             const appointmentsList = document.getElementById('appointmentsList');
             
-            // Ocultar mensaje de "no hay citas" y mostrar la lista
-            noAppointments.style.display = 'none';
-            appointmentsList.style.display = 'block';
+            // Verificar si hay citas disponibles desde el backend
+            const hasCitas = /*[[${cliente != null && cliente.citas != null && !cliente.citas.isEmpty()}]]*/ false;
             
-            // Generar datos de muestra
-            const sampleAppointments = [
-                {
-                    date: '15 Sep 2025',
-                    time: '10:30 AM',
-                    doctor: 'Dr. Juan Pérez',
-                    specialty: 'Medicina General',
-                    type: 'Control'
-                },
-                {
-                    date: '22 Sep 2025',
-                    time: '3:45 PM',
-                    doctor: 'Dra. Ana Martínez',
-                    specialty: 'Dermatología',
-                    type: 'Consulta'
-                }
-            ];
-            
-            // Generar HTML para las citas
-            let appointmentsHTML = '';
-            sampleAppointments.forEach(appointment => {
-                appointmentsHTML += `
-                <div class="appointment-item">
-                    <div class="appointment-date">
-                        <div class="date-badge">
-                            <span class="date-day">${appointment.date.split(' ')[0]}</span>
-                            <span class="date-month">${appointment.date.split(' ')[1]}</span>
-                        </div>
-                        <span class="appointment-time">${appointment.time}</span>
-                    </div>
-                    <div class="appointment-details">
-                        <h4>${appointment.type}</h4>
-                        <p><i class="fas fa-user-md"></i> ${appointment.doctor} - ${appointment.specialty}</p>
-                    </div>
-                </div>
-                `;
-            });
-            
-            appointmentsList.innerHTML = appointmentsHTML;
-        }
+            if (hasCitas) {
+                // Ocultar mensaje de "no hay citas" y mostrar la lista
+                noAppointments.style.display = 'none';
+                appointmentsList.style.display = 'block';
+                
+                // Las citas ya deberían estar renderizadas por Thymeleaf
+            } else {
+                // Mostrar mensaje de "no hay citas"
+                noAppointments.style.display = 'block';
+                appointmentsList.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>

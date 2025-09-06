@@ -1,19 +1,26 @@
 package com.example.CrudBasicCitas.controllers;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.example.CrudBasicCitas.entities.Citas;
 import com.example.CrudBasicCitas.entities.Cliente;
 import com.example.CrudBasicCitas.services.CitasService;
 import com.example.CrudBasicCitas.services.ClienteService;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-import java.util.Optional;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/citas")
@@ -26,7 +33,7 @@ public class CitasController {
 
     @GetMapping("/nuevaCita")
     public String mostrarFormNuevaCita(HttpSession session, Model model){
-        Long clienteId = (Long) session.getAttribute("ClienteId");
+        Long clienteId = (Long) session.getAttribute("clienteId");
 
         if (clienteId == null){
             return "redirect:/login";
@@ -79,14 +86,24 @@ public class CitasController {
             return "redirect:/login";
         }
 
-        Cliente cliente = clienteService.obtenerClientePorId(clienteId);
-        List<Citas> citas = citasService.obtenerCitasPorCliente(cliente);
-
-        model.addAttribute("citas", citas);
-        model.addAttribute("cliente", cliente);
-
-        return "listaCitas";
-
+        try {
+            Cliente cliente = clienteService.obtenerClientePorId(clienteId);
+            List<Citas> citas = citasService.obtenerCitasPorCliente(cliente);
+            
+            if (citas == null) {
+                citas = new ArrayList<>();
+            }
+            
+            model.addAttribute("citas", citas);
+            model.addAttribute("cliente", cliente);
+            
+            return "misCitas";
+        } catch (Exception e) {
+            
+            model.addAttribute("error", "Ocurrió un error al cargar tus citas: " + e.getMessage());
+            model.addAttribute("citas", new ArrayList<>());
+            return "misCitas";
+        }
     }
 
     @GetMapping("/editar/{id}")
