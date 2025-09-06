@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Cita - MediCare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <link rel="stylesheet" th:href="@{/styles/registrarCitas.css}">
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="https://img.icons8.com/color/48/000000/medical-doctor.png" alt="MediCare Logo">
+                <span class="logo-text">MediCare</span>
+            </div>
+            <nav class="nav-links">
+                <a th:href="@{/Inicio}">Inicio</a>
+                <a th:href="@{/citas/misCitas}">Mis Citas</a>
+                <a th:href="@{/citas/nuevaCita}" class="active">Nueva Cita</a>
+                <a th:href="@{/about}">Nosotros</a>
+            </nav>
+            <div class="user-actions">
+                <a th:href="@{/logout}" class="btn btn-logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Programar Nueva Cita</h1>
+            <p>Complete el formulario a continuación para agendar su cita médica</p>
+        </div>
+
+        <!-- Alertas de error o éxito -->
+        <div th:if="${error}" class="alert alert-error">
+            <i class="fas fa-exclamation-circle"></i>
+            <span th:text="${error}"></span>
+        </div>
+
+        <div class="appointment-container">
+            <div class="appointment-form-card">
+                <h2><i class="fas fa-calendar-plus"></i> Detalles de la Cita</h2>
+                
+                <form th:action="@{/citas/registrarCita}" method="post" class="appointment-form">
+                    <div class="form-group">
+                        <label for="asunto">Asunto</label>
+                        <input type="text" id="asunto" name="asunto" class="form-control" required 
+                               placeholder="Ej: Consulta de rutina, Control mensual, etc." maxlength="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tipoCita">Tipo de Cita</label>
+                        <select id="tipoCita" name="tipoCita" class="form-control" required>
+                            <option value="" selected disabled>Seleccione el tipo de cita</option>
+                            <option value="Consulta General">Consulta General</option>
+                            <option value="Especialista">Consulta con Especialista</option>
+                            <option value="Control">Control/Seguimiento</option>
+                            <option value="Urgencia">Atención de Urgencia</option>
+                            <option value="Exámenes">Exámenes Médicos</option>
+                            <option value="Terapia">Terapia/Rehabilitación</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fecha_cita">Fecha y Hora</label>
+                        <input type="datetime-local" id="fecha_cita" name="fecha_cita" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="doctor">Doctor</label>
+                        <select id="doctor" name="doctor" class="form-control" required>
+                            <option value="" selected disabled>Seleccione un doctor</option>
+                            <option value="Dr. Juan Pérez">Dr. Juan Pérez - Medicina General</option>
+                            <option value="Dra. María Rodríguez">Dra. María Rodríguez - Cardiología</option>
+                            <option value="Dr. Carlos López">Dr. Carlos López - Pediatría</option>
+                            <option value="Dra. Ana Martínez">Dra. Ana Martínez - Dermatología</option>
+                            <option value="Dr. Roberto Sánchez">Dr. Roberto Sánchez - Neurología</option>
+                            <option value="Dra. Laura González">Dra. Laura González - Ginecología</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="descripcion">Descripción del Motivo</label>
+                        <textarea id="descripcion" name="descripcion" class="form-control" rows="4" required
+                                  placeholder="Describa brevemente los síntomas o la razón de su cita..." maxlength="275"></textarea>
+                        <div class="char-count">
+                            <span id="charCount">0</span>/275 caracteres
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <a th:href="@{/Inicio}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Agendar Cita</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="appointment-info">
+                <div class="info-card">
+                    <h3><i class="fas fa-info-circle"></i> Información Importante</h3>
+                    <ul>
+                        <li>Las citas deben programarse con al menos 24 horas de anticipación.</li>
+                        <li>Presente su identificación al momento de la cita.</li>
+                        <li>Llegue 15 minutos antes de su hora programada.</li>
+                        <li>En caso de no poder asistir, cancele su cita con anticipación.</li>
+                    </ul>
+                </div>
+                
+                <div class="doctor-preview" id="doctorPreview">
+                    <div class="no-selection">
+                        <i class="fas fa-user-md"></i>
+                        <p>Seleccione un doctor para ver su información</p>
+                    </div>
+                    <!-- El contenido se reemplaza dinámicamente mediante JavaScript -->
+                </div>
+                
+                <div class="help-card">
+                    <h3><i class="fas fa-phone-alt"></i> ¿Necesitas ayuda?</h3>
+                    <p>Si tienes dudas sobre qué tipo de cita reservar:</p>
+                    <p><i class="fas fa-phone"></i> +57 300 123 4567</p>
+                    <p><i class="fas fa-envelope"></i> ayuda@medicare.com</p>
+                    <p><i class="fas fa-clock"></i> Lunes a Viernes: 8:00 AM - 6:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="logo">
+                    <img src="https://img.icons8.com/color/48/000000/medical-doctor.png" alt="MediCare Logo">
+                    <span class="logo-text">MediCare</span>
+                </div>
+                <p>Tu plataforma integral para la gestión de citas médicas, enfocada en brindar un servicio de calidad.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces rápidos</h3>
+                <ul class="footer-links">
+                    <li><a th:href="@{/Inicio}">Inicio</a></li>
+                    <li><a th:href="@{/citas/misCitas}">Mis Citas</a></li>
+                    <li><a th:href="@{/about}">Nosotros</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Av. Principal #123, Ciudad</p>
+                <p><i class="fas fa-phone"></i> +57 300 123 4567</p>
+                <p><i class="fas fa-envelope"></i> contacto@medicare.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 MediCare. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script para interactividad del formulario -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Contador de caracteres para el campo descripción
+            const descripcionTextarea = document.getElementById('descripcion');
+            const charCountSpan = document.getElementById('charCount');
+            
+            descripcionTextarea.addEventListener('input', function() {
+                const currentLength = this.value.length;
+                charCountSpan.textContent = currentLength;
+                
+                // Cambiar color del contador si se acerca al límite
+                if (currentLength > 250) {
+                    charCountSpan.style.color = '#e74c3c';
+                } else if (currentLength > 200) {
+                    charCountSpan.style.color = '#f39c12';
+                } else {
+                    charCountSpan.style.color = '#333';
+                }
+            });
+            
+            // Preview de información del doctor cuando se selecciona
+            const doctorSelect = document.getElementById('doctor');
+            const doctorPreview = document.getElementById('doctorPreview');
+            
+            const doctorInfo = {
+                'Dr. Juan Pérez': {
+                    specialty: 'Medicina General',
+                    experience: '15 años de experiencia',
+                    schedule: 'Lunes a Viernes: 8:00 AM - 2:00 PM',
+                    image: 'https://randomuser.me/api/portraits/men/41.jpg'
+                },
+                'Dra. María Rodríguez': {
+                    specialty: 'Cardiología',
+                    experience: '12 años de experiencia',
+                    schedule: 'Lunes, Miércoles y Viernes: 2:00 PM - 6:00 PM',
+                    image: 'https://randomuser.me/api/portraits/women/44.jpg'
+                },
+                'Dr. Carlos López': {
+                    specialty: 'Pediatría',
+                    experience: '10 años de experiencia',
+                    schedule: 'Martes y Jueves: 8:00 AM - 5:00 PM',
+                    image: 'https://randomuser.me/api/portraits/men/36.jpg'
+                },
+                'Dra. Ana Martínez': {
+                    specialty: 'Dermatología',
+                    experience: '8 años de experiencia',
+                    schedule: 'Miércoles y Viernes: 10:00 AM - 4:00 PM',
+                    image: 'https://randomuser.me/api/portraits/women/66.jpg'
+                },
+                'Dr. Roberto Sánchez': {
+                    specialty: 'Neurología',
+                    experience: '18 años de experiencia',
+                    schedule: 'Lunes y Jueves: 1:00 PM - 7:00 PM',
+                    image: 'https://randomuser.me/api/portraits/men/55.jpg'
+                },
+                'Dra. Laura González': {
+                    specialty: 'Ginecología',
+                    experience: '14 años de experiencia',
+                    schedule: 'Martes y Viernes: 8:00 AM - 3:00 PM',
+                    image: 'https://randomuser.me/api/portraits/women/32.jpg'
+                }
+            };
+            
+            doctorSelect.addEventListener('change', function() {
+                const selectedDoctor = this.value;
+                
+                if (selectedDoctor && doctorInfo[selectedDoctor]) {
+                    const info = doctorInfo[selectedDoctor];
+                    
+                    doctorPreview.innerHTML = `
+                        <h3>Información del Doctor</h3>
+                        <div class="doctor-card">
+                            <div class="doctor-image">
+                                <img src="${info.image}" alt="${selectedDoctor}">
+                            </div>
+                            <div class="doctor-info">
+                                <h4>${selectedDoctor}</h4>
+                                <p><i class="fas fa-stethoscope"></i> ${info.specialty}</p>
+                                <p><i class="fas fa-user-md"></i> ${info.experience}</p>
+                                <p><i class="fas fa-clock"></i> ${info.schedule}</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    doctorPreview.innerHTML = `
+                        <div class="no-selection">
+                            <i class="fas fa-user-md"></i>
+                            <p>Seleccione un doctor para ver su información</p>
+                        </div>
+                    `;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

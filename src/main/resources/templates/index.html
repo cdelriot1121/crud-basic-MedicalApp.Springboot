@@ -1,15 +1,242 @@
-<!doctype html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare - Tu Sistema de Citas Médicas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <link rel="stylesheet" th:href="@{/styles/index.css}">
 </head>
 <body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="https://img.icons8.com/color/48/000000/medical-doctor.png" alt="MediCare Logo">
+                <span class="logo-text">MediCare</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#" class="active">Inicio</a>
+                <a th:href="@{/about}">Nosotros</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+            <div class="auth-buttons">
+                <a th:href="@{/login}" class="btn">Iniciar Sesión</a>
+                <a th:href="@{/register}" class="btn btn-secondary">Registrarse</a>
+            </div>
+        </div>
+    </header>
 
-    <h1>Tittle h1</h1>
-    <p>Sistema Medico para Citas medicas :D</p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Cuidamos de tu salud con profesionalismo</h1>
+            <p>Gestiona tus citas médicas de manera fácil y rápida con MediCare, tu plataforma integral de salud</p>
+            <div class="hero-buttons">
+                <a th:href="@{/register}" class="btn btn-lg">Comenzar ahora</a>
+                <a href="#como-funciona" class="btn btn-outline btn-lg">Cómo funciona</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1584982751601-97dcc096659c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Doctor con paciente">
+        </div>
+    </section>
 
+    <!-- Beneficios -->
+    <section class="benefits" id="como-funciona">
+        <div class="container">
+            <h2 class="section-title">¿Por qué elegir MediCare?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Citas fáciles</h3>
+                    <p>Agenda, modifica o cancela citas médicas desde cualquier dispositivo en minutos.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Especialistas calificados</h3>
+                    <p>Accede a una red de médicos de todas las especialidades con años de experiencia.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>Historial médico</h3>
+                    <p>Mantén un registro completo de tus citas y tratamientos para un mejor seguimiento.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Recordatorios</h3>
+                    <p>Recibe notificaciones de tus próximas citas para que nunca olvides una consulta.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Servicios -->
+    <section class="services" id="servicios">
+        <div class="container">
+            <h2 class="section-title">Nuestros servicios médicos</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1631815588090-d4bfb0629a89?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80" alt="Medicina general">
+                    <h3>Medicina General</h3>
+                    <p>Consultas y chequeos regulares para mantener tu salud en óptimas condiciones.</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80" alt="Cardiología">
+                    <h3>Cardiología</h3>
+                    <p>Especialistas en salud cardiovascular para prevención y tratamiento.</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1609840117098-3a9495c5c87e?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80" alt="Pediatría">
+                    <h3>Pediatría</h3>
+                    <p>Atención especializada para los más pequeños de la familia.</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1606318313496-746276419cee?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80" alt="Dermatología">
+                    <h3>Dermatología</h3>
+                    <p>Cuidado integral de la piel para problemas comunes y específicos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Lo que dicen nuestros pacientes</h2>
+            <div class="testimonials-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"MediCare ha simplificado la forma en que gestiono mis citas médicas. Ya no tengo que esperar en largas colas o hacer llamadas interminables."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="María González">
+                        <div>
+                            <h4>María González</h4>
+                            <span>Paciente desde 2022</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Como médico, valoro la eficiencia y organización que esta plataforma ofrece tanto a los profesionales como a los pacientes."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Roberto Sánchez">
+                        <div>
+                            <h4>Dr. Roberto Sánchez</h4>
+                            <span>Cardiólogo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>¿Tienes preguntas?</h2>
+                    <p>Estamos aquí para ayudarte con cualquier duda sobre nuestros servicios o la plataforma.</p>
+                    <div class="contact-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Av. Principal #123, Ciudad Médica</span>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-phone"></i>
+                        <span>+57 300 123 4567</span>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-envelope"></i>
+                        <span>contacto@medicare.com</span>
+                    </div>
+                    <div class="social-media">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Envíanos un mensaje</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Nombre completo</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Asunto</label>
+                            <input type="text" id="subject" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" rows="5" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Enviar mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="logo">
+                    <img src="https://img.icons8.com/color/48/000000/medical-doctor.png" alt="MediCare Logo">
+                    <span class="logo-text">MediCare</span>
+                </div>
+                <p>Tu plataforma integral para la gestión de citas médicas, enfocada en brindar un servicio de calidad.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Inicio</a></li>
+                    <li><a th:href="@{/about}">Nosotros</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Servicios</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Citas médicas</a></li>
+                    <li><a href="#">Especialidades</a></li>
+                    <li><a href="#">Profesionales</a></li>
+                    <li><a href="#">Centros médicos</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 MediCare. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

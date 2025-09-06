@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Usuario - MediCare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <link rel="stylesheet" th:href="@{/styles/inicioUser.css}">
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="https://img.icons8.com/color/48/000000/medical-doctor.png" alt="MediCare Logo">
+                <span class="logo-text">MediCare</span>
+            </div>
+            <nav class="nav-links">
+                <a th:href="@{/Inicio}" class="active">Inicio</a>
+                <a th:href="@{/citas/misCitas}">Mis Citas</a>
+                <a th:href="@{/citas/nuevaCita}">Nueva Cita</a>
+                <a th:href="@{/about}">Nosotros</a>
+            </nav>
+            <div class="user-actions">
+                <a th:href="@{/logout}" class="btn btn-logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Banner de bienvenida -->
+        <div class="welcome-banner">
+            <div class="welcome-content">
+                <h1>Bienvenido a MediCare</h1>
+                <p th:if="${cliente != null}" th:text="'¡Hola, ' + ${cliente.nombre} + '!'"></p>
+                <p>Tu portal personal de salud y bienestar</p>
+                <div class="welcome-actions">
+                    <a th:href="@{/citas/nuevaCita}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-calendar-plus"></i> Agendar Cita
+                    </a>
+                    <a th:href="@{/citas/misCitas}" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-calendar-check"></i> Ver Mis Citas
+                    </a>
+                </div>
+            </div>
+            <div class="welcome-image">
+                <img src="https://images.unsplash.com/photo-1631217867847-4785274cc617?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGRvY3RvcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60" alt="Médico atendiendo paciente">
+            </div>
+        </div>
+        
+        <!-- Servicios Destacados -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <h2>Servicios Destacados</h2>
+                <p>Explora nuestros servicios médicos especializados</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon" style="background-color: #e8f4fd;">
+                        <i class="fas fa-heart" style="color: #3498db;"></i>
+                    </div>
+                    <h3>Medicina General</h3>
+                    <p>Atención médica primaria y consultas generales para toda la familia.</p>
+                    <a href="#" class="service-link">Más información <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon" style="background-color: #eafaf1;">
+                        <i class="fas fa-lungs" style="color: #2ecc71;"></i>
+                    </div>
+                    <h3>Neumología</h3>
+                    <p>Diagnóstico y tratamiento de enfermedades respiratorias.</p>
+                    <a href="#" class="service-link">Más información <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon" style="background-color: #fef5e7;">
+                        <i class="fas fa-child" style="color: #f39c12;"></i>
+                    </div>
+                    <h3>Pediatría</h3>
+                    <p>Cuidado integral de la salud de niños y adolescentes.</p>
+                    <a href="#" class="service-link">Más información <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon" style="background-color: #f4ecf7;">
+                        <i class="fas fa-brain" style="color: #9b59b6;"></i>
+                    </div>
+                    <h3>Neurología</h3>
+                    <p>Especialistas en el diagnóstico y tratamiento de trastornos neurológicos.</p>
+                    <a href="#" class="service-link">Más información <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Próximas citas y accesos rápidos -->
+        <div class="dashboard-grid">
+            <section class="dashboard-card upcoming-appointments">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar-day"></i> Próximas Citas</h3>
+                    <a th:href="@{/citas/misCitas}" class="view-all">Ver todas</a>
+                </div>
+                
+                <div class="upcoming-appointments-empty" id="noAppointments">
+                    <i class="fas fa-calendar-times"></i>
+                    <p>No tienes citas programadas</p>
+                    <a th:href="@{/citas/nuevaCita}" class="btn btn-sm">Agendar Ahora</a>
+                </div>
+                
+                <div class="appointment-list" id="appointmentsList" style="display: none;">
+                    <!-- El contenido se carga dinámicamente con JavaScript o Thymeleaf -->
+                </div>
+            </section>
+            
+            <section class="dashboard-card quick-access">
+                <h3><i class="fas fa-star"></i> Accesos Rápidos</h3>
+                
+                <div class="quick-links">
+                    <a href="#" class="quick-link-card">
+                        <div class="quick-link-icon" style="background-color: #e8f4fd;">
+                            <i class="fas fa-history" style="color: #3498db;"></i>
+                        </div>
+                        <span>Historial Médico</span>
+                    </a>
+                    
+                    <a href="#" class="quick-link-card">
+                        <div class="quick-link-icon" style="background-color: #eafaf1;">
+                            <i class="fas fa-pills" style="color: #2ecc71;"></i>
+                        </div>
+                        <span>Medicamentos</span>
+                    </a>
+                    
+                    <a href="#" class="quick-link-card">
+                        <div class="quick-link-icon" style="background-color: #fef5e7;">
+                            <i class="fas fa-file-medical-alt" style="color: #f39c12;"></i>
+                        </div>
+                        <span>Resultados</span>
+                    </a>
+                    
+                    <a href="#" class="quick-link-card">
+                        <div class="quick-link-icon" style="background-color: #f4ecf7;">
+                            <i class="fas fa-user-md" style="color: #9b59b6;"></i>
+                        </div>
+                        <span>Doctores</span>
+                    </a>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Tips de Salud -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <h2>Tips de Salud</h2>
+                <p>Consejos para mantener un estilo de vida saludable</p>
+            </div>
+            
+            <div class="health-tips">
+                <div class="health-tip">
+                    <div class="tip-image">
+                        <img src="https://images.unsplash.com/photo-1502139214982-d0ad755818d8?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGhlYWx0aHklMjBmb29kfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Alimentación saludable">
+                    </div>
+                    <div class="tip-content">
+                        <h3>Alimentación Balanceada</h3>
+                        <p>Mantén una dieta equilibrada rica en frutas, verduras, proteínas magras y granos enteros para fortalecer tu sistema inmunológico.</p>
+                    </div>
+                </div>
+                
+                <div class="health-tip">
+                    <div class="tip-image">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZXhlcmNpc2V8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Ejercicio regular">
+                    </div>
+                    <div class="tip-content">
+                        <h3>Actividad Física Regular</h3>
+                        <p>Dedica al menos 30 minutos diarios a la actividad física para mejorar tu salud cardiovascular y mantener un peso saludable.</p>
+                    </div>
+                </div>
+                
+                <div class="health-tip">
+                    <div class="tip-image">
+                        <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8c2xlZXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Descanso adecuado">
+                    </div>
+                    <div class="tip-content">
+                        <h3>Descanso Adecuado</h3>
+                        <p>Duerme entre 7 y 9 horas diarias para permitir que tu cuerpo se recupere y mantener un óptimo funcionamiento mental y físico.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="logo">
+                    <img src="https://img.icons8.com/color/48/000000/medical-doctor.png" alt="MediCare Logo">
+                    <span class="logo-text">MediCare</span>
+                </div>
+                <p>Tu plataforma integral para la gestión de citas médicas, enfocada en brindar un servicio de calidad.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces rápidos</h3>
+                <ul class="footer-links">
+                    <li><a th:href="@{/Inicio}">Inicio</a></li>
+                    <li><a th:href="@{/citas/misCitas}">Mis Citas</a></li>
+                    <li><a th:href="@{/citas/nuevaCita}">Nueva Cita</a></li>
+                    <li><a th:href="@{/about}">Nosotros</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Av. Principal #123, Ciudad</p>
+                <p><i class="fas fa-phone"></i> +57 300 123 4567</p>
+                <p><i class="fas fa-envelope"></i> contacto@medicare.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 MediCare. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script para cargar próximas citas (simulación para demo) -->
+    <script>
+        // Simulación de datos para mostrar próximas citas
+        // En un entorno real, estos datos vendrían del backend a través de Thymeleaf
+        document.addEventListener('DOMContentLoaded', function() {
+            // Comenta esta línea para mostrar el mensaje "No tienes citas"
+            loadSampleAppointments();
+        });
+        
+        function loadSampleAppointments() {
+            const noAppointments = document.getElementById('noAppointments');
+            const appointmentsList = document.getElementById('appointmentsList');
+            
+            // Ocultar mensaje de "no hay citas" y mostrar la lista
+            noAppointments.style.display = 'none';
+            appointmentsList.style.display = 'block';
+            
+            // Generar datos de muestra
+            const sampleAppointments = [
+                {
+                    date: '15 Sep 2025',
+                    time: '10:30 AM',
+                    doctor: 'Dr. Juan Pérez',
+                    specialty: 'Medicina General',
+                    type: 'Control'
+                },
+                {
+                    date: '22 Sep 2025',
+                    time: '3:45 PM',
+                    doctor: 'Dra. Ana Martínez',
+                    specialty: 'Dermatología',
+                    type: 'Consulta'
+                }
+            ];
+            
+            // Generar HTML para las citas
+            let appointmentsHTML = '';
+            sampleAppointments.forEach(appointment => {
+                appointmentsHTML += `
+                <div class="appointment-item">
+                    <div class="appointment-date">
+                        <div class="date-badge">
+                            <span class="date-day">${appointment.date.split(' ')[0]}</span>
+                            <span class="date-month">${appointment.date.split(' ')[1]}</span>
+                        </div>
+                        <span class="appointment-time">${appointment.time}</span>
+                    </div>
+                    <div class="appointment-details">
+                        <h4>${appointment.type}</h4>
+                        <p><i class="fas fa-user-md"></i> ${appointment.doctor} - ${appointment.specialty}</p>
+                    </div>
+                </div>
+                `;
+            });
+            
+            appointmentsList.innerHTML = appointmentsHTML;
+        }
+    </script>
+</body>
+</html>

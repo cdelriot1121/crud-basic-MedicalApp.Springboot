@@ -1,10 +1,8 @@
 package com.example.CrudBasicCitas.controllers;
 
 
-import com.example.CrudBasicCitas.entities.Cliente;
-import com.example.CrudBasicCitas.services.CitasService;
-import com.example.CrudBasicCitas.services.ClienteService;
-import jakarta.servlet.http.HttpSession;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Optional;
+import com.example.CrudBasicCitas.entities.Cliente;
+import com.example.CrudBasicCitas.services.CitasService;
+import com.example.CrudBasicCitas.services.ClienteService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ClienteController {
@@ -37,7 +39,7 @@ public class ClienteController {
         Optional<Cliente> cliente = clienteService.autenticarCliente(email, password);
         if (cliente.isPresent()) {
             session.setAttribute("clienteId", cliente.get().getId());
-            return "Inicio";
+            return "inicioUser";
         }
 
         return "redirect:/login?error=true";
@@ -76,7 +78,7 @@ public class ClienteController {
 
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error en el registro:" + e.getMessage());
-            return "redirect:/register";
+            return "/register";
 
         }
     }

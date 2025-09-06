@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - MediCare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <link rel="stylesheet" th:href="@{/styles/login.css}">
+</head>
+<body>
+    <!-- Header Simple -->
+    <header class="header">
+        <div class="nav-container">
+            <a th:href="@{/}" class="logo">
+                <img src="https://img.icons8.com/color/48/000000/medical-doctor.png" alt="MediCare Logo">
+                <span class="logo-text">MediCare</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Login Form -->
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>Iniciar Sesión</h1>
+                <p>Accede a tu cuenta para gestionar tus citas médicas</p>
+            </div>
+            
+            <!-- Alerta de error -->
+            <div class="alert alert-error" th:if="${param.error}">
+                <i class="fas fa-exclamation-circle"></i>
+                <span>Email o contraseña incorrectos. Por favor, inténtalo de nuevo.</span>
+            </div>
+            
+            <!-- Form Login -->
+            <form th:action="@{/loginProcess}" method="post" class="login-form">
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Correo electrónico</label>
+                    <input type="email" id="email" name="email" class="form-control" required placeholder="ejemplo@correo.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Contraseña</label>
+                    <div class="password-field">
+                        <input type="password" id="password" name="password" class="form-control" required placeholder="Ingresa tu contraseña">
+                        <button type="button" id="toggle-password" class="toggle-password">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Recordarme</label>
+                    </div>
+                    <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-login">Iniciar Sesión</button>
+                
+                <div class="divider">
+                    <span>o</span>
+                </div>
+                
+                <div class="social-login">
+                    <a href="#" class="social-btn google">
+                        <i class="fab fa-google"></i>
+                        <span>Continuar con Google</span>
+                    </a>
+                    <a href="#" class="social-btn facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Continuar con Facebook</span>
+                    </a>
+                </div>
+            </form>
+            
+            <div class="login-footer">
+                <p>¿No tienes una cuenta? <a th:href="@{/register}">Regístrate aquí</a></p>
+            </div>
+        </div>
+        
+        <div class="login-image">
+            <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80" alt="Doctor con paciente">
+            <div class="image-overlay">
+                <h2>Salud en tus manos</h2>
+                <p>Con MediCare puedes gestionar todas tus citas médicas de forma sencilla y rápida.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Simple -->
+    <footer class="footer-simple">
+        <p>&copy; 2025 MediCare. Todos los derechos reservados.</p>
+        <div class="footer-links">
+            <a th:href="@{/}">Inicio</a>
+            <a th:href="@{/about}">Nosotros</a>
+            <a href="#">Términos y Condiciones</a>
+            <a href="#">Privacidad</a>
+        </div>
+    </footer>
+
+    <!-- Script para toggle password -->
+    <script>
+        document.getElementById('toggle-password').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+    </script>
+</body>
+</html>

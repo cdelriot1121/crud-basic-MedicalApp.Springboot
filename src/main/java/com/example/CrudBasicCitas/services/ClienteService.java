@@ -2,6 +2,8 @@ package com.example.CrudBasicCitas.services;
 
 import com.example.CrudBasicCitas.entities.Cliente;
 import com.example.CrudBasicCitas.repository.ClienteRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.Optional;
 
 @Service
 public class ClienteService {
+    @Autowired
     private ClienteRepository clienteRepository;
 
     // aqui simplemente son los metodos basicos de CRUD

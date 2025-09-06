@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de Nosotros - MediCare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <link rel="stylesheet" th:href="@{/styles/about.css}">
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="https://img.icons8.com/color/48/000000/medical-doctor.png" alt="MediCare Logo">
+                <span class="logo-text">MediCare</span>
+            </div>
+            <nav class="nav-links">
+                <a th:href="@{/}">Inicio</a>
+                <a th:href="@{/about}" class="active">Nosotros</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+            <div class="auth-buttons">
+                <a th:href="@{/login}" class="btn">Iniciar Sesión</a>
+                <a th:href="@{/register}" class="btn btn-secondary">Registrarse</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Banner Hero -->
+        <section class="hero-banner">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1>Nuestra Historia</h1>
+                <p>Más de 15 años brindando servicios de salud de calidad</p>
+            </div>
+        </section>
+        
+        <!-- Sección de Historia -->
+        <section class="about-section">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-content">
+                        <div class="section-title">
+                            <span>Conócenos</span>
+                            <h2>Quiénes Somos</h2>
+                        </div>
+                        <p>MediCare nació en 2010 con la visión de transformar la experiencia de los pacientes en el sistema de salud. Fundada por un grupo de profesionales médicos comprometidos con la mejora de los servicios sanitarios, nuestra plataforma se ha convertido en el referente para la gestión de citas médicas en la región.</p>
+                        <p>A lo largo de estos años, hemos evolucionado constantemente, incorporando nuevas tecnologías y ampliando nuestra red de especialistas, sin perder nunca de vista nuestro objetivo principal: poner al paciente en el centro de todo lo que hacemos.</p>
+                        <div class="about-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">15+</span>
+                                <span class="stat-label">Años de experiencia</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">50+</span>
+                                <span class="stat-label">Doctores especialistas</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">10k+</span>
+                                <span class="stat-label">Pacientes satisfechos</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1504439468489-c8920d796a29?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1171&q=80" alt="Equipo médico">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Nuestra Misión y Visión -->
+        <section class="mission-vision">
+            <div class="container">
+                <div class="mission-vision-grid">
+                    <div class="mission-card">
+                        <div class="card-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h2>Nuestra Misión</h2>
+                        <p>Proporcionar servicios médicos accesibles y de alta calidad a través de una plataforma intuitiva que conecte a pacientes con los mejores profesionales de la salud, facilitando la gestión de citas y mejorando la experiencia del paciente.</p>
+                    </div>
+                    <div class="vision-card">
+                        <div class="card-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h2>Nuestra Visión</h2>
+                        <p>Ser la plataforma líder en servicios de salud digital, reconocida por su innovación, excelencia en la atención al paciente y por contribuir a mejorar el bienestar y la calidad de vida de las personas en toda la región.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Valores -->
+        <section class="values-section">
+            <div class="container">
+                <div class="section-title centered">
+                    <span>Nuestros Principios</span>
+                    <h2>Valores que nos guían</h2>
+                </div>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h3>Humanidad</h3>
+                        <p>Tratamos a cada paciente con empatía, dignidad y respeto, recordando siempre el aspecto humano de la atención médica.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Integridad</h3>
+                        <p>Actuamos con honestidad y transparencia en todas nuestras operaciones, manteniendo los más altos estándares éticos.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Excelencia</h3>
+                        <p>Nos esforzamos constantemente por mejorar nuestros servicios y superar las expectativas de nuestros pacientes.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Colaboración</h3>
+                        <p>Trabajamos en equipo con profesionales médicos, pacientes y socios para ofrecer la mejor atención posible.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Equipo -->
+        <section id="servicios" class="team-section">
+            <div class="container">
+                <div class="section-title centered">
+                    <span>Profesionales destacados</span>
+                    <h2>Nuestro Equipo Médico</h2>
+                </div>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Roberto Sánchez">
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h3>Dr. Roberto Sánchez</h3>
+                            <span class="team-position">Cardiología</span>
+                            <p>Especialista con más de 15 años de experiencia en diagnóstico y tratamiento de enfermedades cardiovasculares.</p>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Dra. María Rodríguez">
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h3>Dra. María Rodríguez</h3>
+                            <span class="team-position">Pediatría</span>
+                            <p>Dedicada al cuidado integral de la salud infantil, con enfoque en prevención y desarrollo saludable.</p>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Dr. Carlos Gómez">
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h3>Dr. Carlos Gómez</h3>
+                            <span class="team-position">Neurología</span>
+                            <p>Especialista en diagnóstico y tratamiento de trastornos del sistema nervioso con enfoque en técnicas innovadoras.</p>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="https://randomuser.me/api/portraits/women/74.jpg" alt="Dra. Laura Martínez">
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h3>Dra. Laura Martínez</h3>
+                            <span class="team-position">Dermatología</span>
+                            <p>Experta en salud de la piel, con especialización en tratamientos dermatológicos avanzados y estéticos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonios -->
+        <section class="testimonials-section">
+            <div class="container">
+                <div class="section-title centered">
+                    <span>Experiencias reales</span>
+                    <h2>Lo que dicen nuestros pacientes</h2>
+                </div>
+                <div class="testimonials-slider">
+                    <div class="testimonial-card">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">"MediCare ha transformado por completo mi experiencia con las citas médicas. El sistema es intuitivo y la calidad de atención de los especialistas es excepcional. Definitivamente lo recomiendo a todos."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Ana García">
+                            <div>
+                                <h4>Ana García</h4>
+                                <span>Paciente desde 2021</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">"Como médico, puedo decir que la plataforma MediCare ha mejorado significativamente la eficiencia de mi práctica. Mis pacientes aprecian la facilidad para agendar citas y el seguimiento es mucho más organizado."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="Dr. Javier López">
+                            <div>
+                                <h4>Dr. Javier López</h4>
+                                <span>Médico General</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">"Gracias a MediCare, gestionar las citas médicas de toda mi familia es muchísimo más sencillo. La atención es personalizada y siempre encuentro los especialistas que necesitamos."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Carmen Ruiz">
+                            <div>
+                                <h4>Carmen Ruiz</h4>
+                                <span>Paciente desde 2020</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contacto -->
+        <section id="contacto" class="contact-section">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="section-title">
+                            <span>Ponte en contacto</span>
+                            <h2>¿Tienes preguntas?</h2>
+                        </div>
+                        <p>Estamos aquí para ayudarte. No dudes en contactarnos si necesitas más información sobre nuestros servicios o tienes alguna duda.</p>
+                        
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h3>Ubicación</h3>
+                                    <p>Av. Principal #123, Ciudad Médica</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h3>Teléfono</h3>
+                                    <p>+57 300 123 4567</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h3>Email</h3>
+                                    <p>contacto@medicare.com</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h3>Horario de Atención</h3>
+                                    <p>Lunes a Viernes: 8:00 AM - 6:00 PM<br>Sábados: 9:00 AM - 1:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form-wrapper">
+                        <form class="contact-form">
+                            <h3>Envíanos un mensaje</h3>
+                            <div class="form-group">
+                                <input type="text" placeholder="Nombre Completo" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Correo Electrónico" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Asunto" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea rows="5" placeholder="Tu Mensaje" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Mapa -->
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.9364719526856!2d-74.07715248573687!3d4.598794796653898!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f99a7147877c9%3A0x378b95e9b4bd853e!2sCl.%2026%20%2313-19%2C%20Bogot%C3%A1%2C%20Colombia!5e0!3m2!1sen!2sus!4v1631222424584!5m2!1sen!2sus" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="logo">
+                    <img src="https://img.icons8.com/color/48/000000/medical-doctor.png" alt="MediCare Logo">
+                    <span class="logo-text">MediCare</span>
+                </div>
+                <p>Tu plataforma integral para la gestión de citas médicas, enfocada en brindar un servicio de calidad.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces rápidos</h3>
+                <ul class="footer-links">
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a th:href="@{/about}">Nosotros</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Servicios</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Medicina General</a></li>
+                    <li><a href="#">Especialistas</a></li>
+                    <li><a href="#">Exámenes Médicos</a></li>
+                    <li><a href="#">Seguimiento</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 MediCare. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

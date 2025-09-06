@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Citas - MediCare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <link rel="stylesheet" th:href="@{/styles/misCitas.css}">
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="https://img.icons8.com/color/48/000000/medical-doctor.png" alt="MediCare Logo">
+                <span class="logo-text">MediCare</span>
+            </div>
+            <nav class="nav-links">
+                <a th:href="@{/Inicio}">Inicio</a>
+                <a th:href="@{/citas/misCitas}" class="active">Mis Citas</a>
+                <a th:href="@{/citas/nuevaCita}">Nueva Cita</a>
+                <a th:href="@{/about}">Nosotros</a>
+            </nav>
+            <div class="user-actions">
+                <a th:href="@{/logout}" class="btn btn-logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Mis Citas Médicas</h1>
+            <p>Administra y da seguimiento a todas tus citas</p>
+        </div>
+
+        <!-- Alertas de mensaje o error -->
+        <div th:if="${mensaje}" class="alert alert-success">
+            <i class="fas fa-check-circle"></i>
+            <span th:text="${mensaje}"></span>
+        </div>
+
+        <div class="citas-actions">
+            <div class="search-filter">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar por asunto, doctor o tipo...">
+                </div>
+                <div class="filter-box">
+                    <label for="filterTipo">Filtrar por:</label>
+                    <select id="filterTipo">
+                        <option value="all">Todas las citas</option>
+                        <option value="Consulta General">Consulta General</option>
+                        <option value="Especialista">Especialista</option>
+                        <option value="Control">Control</option>
+                        <option value="Urgencia">Urgencia</option>
+                        <option value="Exámenes">Exámenes</option>
+                        <option value="Terapia">Terapia</option>
+                    </select>
+                </div>
+            </div>
+            <a th:href="@{/citas/nuevaCita}" class="btn btn-primary btn-with-icon">
+                <i class="fas fa-plus"></i> Nueva Cita
+            </a>
+        </div>
+
+        <!-- Lista de citas -->
+        <div class="citas-grid" th:if="${not #lists.isEmpty(citas)}">
+            <div class="cita-card" th:each="cita : ${citas}">
+                <div class="cita-header">
+                    <div class="cita-badge" th:classappend="${cita.tipoCita == 'Consulta General' ? 'badge-primary' : 
+                                                         cita.tipoCita == 'Especialista' ? 'badge-info' :
+                                                         cita.tipoCita == 'Control' ? 'badge-success' :
+                                                         cita.tipoCita == 'Urgencia' ? 'badge-danger' :
+                                                         cita.tipoCita == 'Exámenes' ? 'badge-warning' : 
+                                                         'badge-secondary'}">
+                        <span th:text="${cita.tipoCita}"></span>
+                    </div>
+                    <div class="cita-date">
+                        <i class="far fa-calendar-alt"></i>
+                        <span th:text="${cita.fecha_cita}"></span>
+                    </div>
+                </div>
+                <div class="cita-body">
+                    <h3 class="cita-title" th:text="${cita.asunto}"></h3>
+                    <div class="cita-doctor">
+                        <i class="fas fa-user-md"></i>
+                        <span th:text="${cita.doctor}"></span>
+                    </div>
+                    <p class="cita-description" th:text="${cita.descripcion}"></p>
+                </div>
+                <div class="cita-footer">
+                    <a th:href="@{'/citas/editar/' + ${cita.id}}" class="btn btn-sm btn-edit">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <a th:href="@{'/citas/eliminar/' + ${cita.id}}" class="btn btn-sm btn-delete"
+                       onclick="return confirm('¿Estás seguro de que deseas eliminar esta cita?')">
+                        <i class="fas fa-trash-alt"></i> Eliminar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensaje cuando no hay citas -->
+        <div class="no-citas" th:if="${#lists.isEmpty(citas)}">
+            <div class="no-citas-content">
+                <i class="far fa-calendar-times"></i>
+                <h2>No tienes citas programadas</h2>
+                <p>Programa tu primera cita médica con uno de nuestros especialistas.</p>
+                <a th:href="@{/citas/nuevaCita}" class="btn btn-primary">Agendar Cita</a>
+            </div>
+        </div>
+
+        <!-- Paginación (opcional) -->
+        <div class="pagination" th:if="${not #lists.isEmpty(citas) and citas.size() > 10}">
+            <a href="#" class="page-link active">1</a>
+            <a href="#" class="page-link">2</a>
+            <a href="#" class="page-link">3</a>
+            <span class="page-dots">...</span>
+            <a href="#" class="page-link">
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="logo">
+                    <img src="https://img.icons8.com/color/48/000000/medical-doctor.png" alt="MediCare Logo">
+                    <span class="logo-text">MediCare</span>
+                </div>
+                <p>Tu plataforma integral para la gestión de citas médicas, enfocada en brindar un servicio de calidad.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces rápidos</h3>
+                <ul class="footer-links">
+                    <li><a th:href="@{/Inicio}">Inicio</a></li>
+                    <li><a th:href="@{/citas/misCitas}">Mis Citas</a></li>
+                    <li><a th:href="@{/citas/nuevaCita}">Nueva Cita</a></li>
+                    <li><a th:href="@{/about}">Nosotros</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Av. Principal #123, Ciudad</p>
+                <p><i class="fas fa-phone"></i> +57 300 123 4567</p>
+                <p><i class="fas fa-envelope"></i> contacto@medicare.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 MediCare. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script para búsqueda y filtrado -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const filterTipo = document.getElementById('filterTipo');
+            const citasCards = document.querySelectorAll('.cita-card');
+            
+            // Función para filtrar las citas
+            function filterCitas() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const selectedType = filterTipo.value;
+                
+                citasCards.forEach(card => {
+                    const title = card.querySelector('.cita-title').textContent.toLowerCase();
+                    const doctor = card.querySelector('.cita-doctor span').textContent.toLowerCase();
+                    const description = card.querySelector('.cita-description').textContent.toLowerCase();
+                    const type = card.querySelector('.cita-badge span').textContent;
+                    
+                    const matchesSearch = title.includes(searchTerm) || 
+                                         doctor.includes(searchTerm) || 
+                                         description.includes(searchTerm);
+                    
+                    const matchesType = selectedType === 'all' || type === selectedType;
+                    
+                    if (matchesSearch && matchesType) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Eventos para buscar y filtrar
+            searchInput.addEventListener('input', filterCitas);
+            filterTipo.addEventListener('change', filterCitas);
+        });
+    </script>
+</body>
+</html>

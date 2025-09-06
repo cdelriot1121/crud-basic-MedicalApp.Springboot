@@ -34,7 +34,7 @@ public class CitasController {
 
         Cliente cliente = clienteService.obtenerClientePorId(clienteId);
         model.addAttribute("cliente", cliente);
-        return "nuevaCita";
+        return "registrarCitas";
     }
 
     @PostMapping("/registrarCita")
